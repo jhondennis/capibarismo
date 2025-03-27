@@ -4,6 +4,13 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"]
+      },
+      container: {
+        center: true,
+        padding: "1rem"
+      },
       animation: {
         "fade-in": "fadeIn 0.5s ease-in",
         "slide-up": "slideUp 0.5s ease-out",

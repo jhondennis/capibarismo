@@ -1,22 +1,78 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="keywords"
+      content="capybara, capivaras, capivarismo, capybara lifestyle, cute animals"
+    />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/capybara-social.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/images/capybara-social.jpg" />
+    <script is:inline>
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      })();
+
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+  </head>
+  <body
+    class="bg-warm-100 dark:bg-warm-800 text-warm-900 dark:text-warm-50 transition-colors duration-300"
+  >
+    <div id="custom-cursor" class="hidden md:block"></div>
+    <Header />
+    <slot />
+    <Footer />
+
+    <script>
+      // Custom capybara cursor
+      document.addEventListener("DOMContentLoaded", () => {
+        const cursor = document.getElementById("custom-cursor");
+
+        document.addEventListener("mousemove", e => {
+          if (cursor) {
+            cursor.style.left = e.clientX + "px";
+            cursor.style.top = e.clientY + "px";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

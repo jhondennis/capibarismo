@@ -1,1 +1,98 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-warm-50: #faf7f5;
+  --color-warm-100: #f5efe9;
+  --color-warm-200: #e9dfd4;
+  --color-warm-300: #d9c7b8;
+  --color-warm-400: #c4a99a;
+  --color-warm-500: #b08b7a;
+  --color-warm-600: #96705e;
+  --color-warm-700: #7c5a4c;
+  --color-warm-800: #654a40;
+  --color-warm-900: #523e37;
+  --color-warm-950: #2d211d;
+}
+* {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--warm-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--warm-400);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--warm-500);
+}
+
+.dark::-webkit-scrollbar-track {
+  background: var(--warm-900);
+}
+
+.dark::-webkit-scrollbar-thumb {
+  background: var(--warm-700);
+}
+
+.dark::-webkit-scrollbar-thumb:hover {
+  background: var(--warm-600);
+}
+
+/* Custom cursor */
+#custom-cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  background-image: url("/images/capybara-cursor.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+/* Hide default cursor when custom cursor is active */
+body:has(#custom-cursor:not(.hidden)) {
+  cursor: none;
+}
+
+body:has(#custom-cursor:not(.hidden)) a,
+body:has(#custom-cursor:not(.hidden)) button {
+  cursor: none;
+}
+
+/* Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1s;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}

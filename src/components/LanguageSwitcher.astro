@@ -1,0 +1,77 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const languages = [
+  { code: "es", name: "Español", flag: "🇪🇸" },
+  { code: "en", name: "English", flag: "🇺🇸" }
+];
+
+const currentLanguage = languages.find(l => l.code === lang) || languages[0];
+---
+
+<div class="relative group">
+  <button
+    id="language-toggle"
+    class="flex items-center gap-2 p-2 rounded-full hover:bg-warm-200 dark:hover:bg-warm-800 transition-colors"
+  >
+    <span>{currentLanguage.flag}</span>
+    <span class="hidden sm:inline">{currentLanguage.name}</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="w-4 h-4"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <div
+    id="language-dropdown"
+    class="absolute right-0 mt-2 w-40 bg-white dark:bg-warm-900 rounded-lg shadow-lg border border-warm-200 dark:border-warm-800 hidden group-hover:block z-50"
+  >
+    <div class="p-2">
+      {
+        languages.map(language => (
+          <a
+            href={`/${language.code}`}
+            class={`flex items-center gap-2 px-3 py-2 rounded-md ${language.code === lang ? "bg-warm-100 dark:bg-warm-800" : "hover:bg-warm-100 dark:hover:bg-warm-800"} transition-colors`}
+          >
+            <span>{language.flag}</span>
+            <span>{language.name}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("language-toggle");
+    const dropdown = document.getElementById("language-dropdown");
+
+    if (toggle && dropdown) {
+      toggle.addEventListener("click", e => {
+        e.stopPropagation();
+        dropdown.classList.toggle("hidden");
+      });
+
+      document.addEventListener("click", e => {
+        if (
+          !dropdown.contains(e.target as Node) &&
+          !toggle.contains(e.target as Node)
+        ) {
+          dropdown.classList.add("hidden");
+        }
+      });
+    }
+  });
+</script>

@@ -1,0 +1,24 @@
+---
+interface ButtonProps {
+  text: string;
+  href: string;
+  type?: "primary" | "secondary";
+}
+
+const { text, href, type } = Astro.props as ButtonProps;
+
+const buttonClass = {
+  primary:
+    "bg-warm-600 text-white hover:bg-warm-700 dark:bg-warm-500 dark:hover:bg-warm-600",
+  secondary:
+    "bg-warm-200 text-warm-900 hover:bg-warm-300 dark:bg-warm-800 dark:text-warm-50 dark:hover:bg-warm-700"
+};
+---
+
+<a
+  href={href}
+  class={`flex items-center justify-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300 text-center ${type ? buttonClass[type] : ""}`}
+>
+  {text}
+  <slot />
+</a>
