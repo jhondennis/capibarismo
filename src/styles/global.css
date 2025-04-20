@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -54,7 +54,7 @@
   position: fixed;
   width: 40px;
   height: 40px;
-  background-image: url("/images/capybara-cursor.png");
+  background-image: url('/images/capybara-cursor.png');
   background-size: contain;
   background-repeat: no-repeat;
   pointer-events: none;
@@ -95,4 +95,12 @@ body:has(#custom-cursor:not(.hidden)) button {
 
 .animation-delay-2000 {
   animation-delay: 2s;
+}
+
+.x {
+  outline: 1px dashed red;
+}
+
+.y {
+  outline: 1px dashed blue;
 }
