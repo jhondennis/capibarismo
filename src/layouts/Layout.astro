@@ -15,25 +15,36 @@ const { title, description } = Astro.props;
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
+    <title>
+      {title}
+    </title>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
 
-    <!-- SEO Meta Tags -->
-    <meta
-      name="keywords"
-      content="capybara, capivaras, capivarismo, capybara lifestyle, cute animals"
-    />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:url" content="https://capibarismo.pages.dev" />
+    <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="/images/capybara-social.jpg" />
+    <meta
+      property="og:image"
+      content="https://capibarismo.pages.dev/images/hero-capybara.jpg"
+    />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Capibara Page" />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@capibarismo" />
+    <meta name="twitter:creator" content="@capibarismo" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/images/capybara-social.jpg" />
+
+    <!-- Theme Detection -->
     <script is:inline>
       const theme = (() => {
         if (
