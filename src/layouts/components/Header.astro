@@ -111,16 +111,18 @@ const { title, navLinks, github, buyMeACoffee, hrefBuymeacoffee } = Astro.props 
     id="mobile-menu"
     class="border-warm-200 dark:border-warm-800 container mx-auto hidden border-t px-4 py-4 md:hidden"
   >
-    <nav class="flex flex-col">
-      {
-        navLinks.map((link) => (
-          <a href={link.href} class="nav-link">
-            {link.text}
-          </a>
-        ))
-      }
-    </nav>
-    <BuyMeACoffee buymeacoffee={buyMeACoffee} href={hrefBuymeacoffee} />
+    <div class="flex flex-col gap-3">
+      <nav class="flex flex-col gap-3">
+        {
+          navLinks.map((link) => (
+            <a href={link.href} class="nav-link">
+              {link.text}
+            </a>
+          ))
+        }
+      </nav>
+      <BuyMeACoffee buymeacoffee={buyMeACoffee} href={hrefBuymeacoffee} />
+    </div>
   </div>
 </header>
 
