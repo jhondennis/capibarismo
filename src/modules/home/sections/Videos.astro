@@ -10,12 +10,13 @@ export interface VideosProps {
   title: string
   subtitle: string
   viewAll: string
+  readMore: string
   lang: string
 
   videos: Video[]
 }
 
-const { title, subtitle, viewAll, lang, videos } = Astro.props as VideosProps
+const { title, subtitle, viewAll, readMore, lang, videos } = Astro.props as VideosProps
 ---
 
 <section id="videos" class="bg-warm-100 dark:bg-warm-800/50 py-20">
@@ -31,6 +32,7 @@ const { title, subtitle, viewAll, lang, videos } = Astro.props as VideosProps
           <VideoCard
             video={video}
             url={getLocalizedRoute([ROUTES.VIDEOS, video.id].join('/'), lang)}
+            readMore={readMore}
           />
         ))
       }

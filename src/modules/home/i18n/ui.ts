@@ -66,6 +66,7 @@ export const homeLocale: Record<Locale, HomeDictionaryProps> = {
       title: 'Videos de capivaras',
       subtitle: '¡Mira los mejores videos de capis en TikTok y YouTube!',
       viewAll: 'Ver todos los videos',
+      readMore: 'Leer más',
     },
   },
   en: {
@@ -130,7 +131,8 @@ export const homeLocale: Record<Locale, HomeDictionaryProps> = {
     sectionVideosProps: {
       title: 'Capybara Videos',
       subtitle: 'Check out the best capy videos on TikTok and YouTube!',
-      viewAll: 'More videos',
+      viewAll: 'See all videos',
+      readMore: 'Read more',
     },
   },
 }

@@ -17,7 +17,7 @@ const { video, url, readMore } = Astro.props as VideoCardProps
 >
   <div set:html={video.data.embed} />
   <a href={url} class="block">
-    <div class="p-4">
+    <div class="flex flex-col gap-2 p-4">
       <h3 class="mb-2 text-xl font-bold">{video.data.title}</h3>
       <p class="text-warm-700 dark:text-warm-300">{video.data.description}</p>
 
@@ -39,24 +39,24 @@ const { video, url, readMore } = Astro.props as VideoCardProps
           <span>{video.data.author}</span>
         </div>
       </div>
-    </div>
-    <div
-      class="text-warm-600 dark:text-warm-400 group-hover:text-warm-800 dark:group-hover:text-warm-200 flex items-center gap-2 font-medium transition-colors"
-    >
-      {readMore}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="h-4 w-4 transition-transform group-hover:translate-x-1"
+      <div
+        class="text-warm-600 dark:text-warm-400 group-hover:text-warm-800 dark:group-hover:text-warm-200 flex items-center gap-2 font-medium transition-colors"
       >
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-      </svg>
+        {readMore}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-4 w-4 transition-transform group-hover:translate-x-1"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
     </div>
   </a>
 </div>

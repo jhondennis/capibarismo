@@ -1,23 +1,36 @@
 ---
-import { getLangFromUrl, useTranslations, type Locale } from '@/i18n'
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
 
+import { getLangFromUrl, useTranslations, type Locale } from '@/i18n'
 import Layout from '@/layouts/Layout.astro'
 import Home from '@/modules/home/views/Home.astro'
 import { homeLocale } from '@/modules/home/i18n'
-import type { HomeProps } from '@/modules/home/views/Home.astro'
+import type { HomeDictionaryProps } from '@/modules/home/views/Home.astro'
 
 const lang = getLangFromUrl(Astro.url)
-const t = useTranslations<HomeProps>(lang as Locale, homeLocale)
+const t = useTranslations<HomeDictionaryProps>(lang as Locale, homeLocale)
+
+type News = CollectionEntry<'news'>
+const news: News[] = await getCollection('news', ({ data }) => data.lang === lang)
+
+type Video = CollectionEntry<'videos'>
+const videos: Video[] = await getCollection('videos', ({ data }) => data.lang === lang)
 ---
 
 <Layout
-  title="Capybarism - Adventures with Capybaras!"
-  description="Meet capybaras, the biggest and coolest rodents in the world!"
+  title={'Capivarismo - ¡Aventuras con capivaras!'}
+  description={'¡Conoce a los capivaras, los roedores más gigantes y cool del mundo!'}
 >
   <Home
-    sectionHeroProps={t('sectionHeroProps')}
-    sectionAboutProps={t('sectionAboutProps')}
-    sectionNewsProps={t('sectionNewsProps')}
-    sectionVideosProps={t('sectionVideosProps')}
+    dictionary={{
+      sectionHeroProps: t('sectionHeroProps'),
+      sectionAboutProps: t('sectionAboutProps'),
+      sectionNewsProps: t('sectionNewsProps'),
+      sectionVideosProps: t('sectionVideosProps'),
+    }}
+    news={news.slice(0, 3)}
+    videos={videos.slice(0, 3)}
+    lang={lang}
   />
 </Layout>
