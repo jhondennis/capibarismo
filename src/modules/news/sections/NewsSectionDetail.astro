@@ -20,7 +20,7 @@ const { news } = Astro.props as NewsSectionDetailProps
     />
     <h1 transition:name={`title-${news.id}`} class="mb-4 text-lg font-light">{news.data.title}</h1>
   </div>
-  <div class="prose prose-invert p-4">
+  <div class="prose dark:prose-invert p-4">
     <slot />
   </div>
 </section>
