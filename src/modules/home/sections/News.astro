@@ -1,0 +1,193 @@
+---
+export interface NewsItemProps {
+  title: string
+  excerpt: string
+  date: string
+  image: string
+  category: string
+  url: string
+  readMore: string
+}
+
+export interface NewsProps {
+  title: string
+  subtitle: string
+  viewAll: string
+  newsLetterTitle: string
+  newsLetterDescription: string
+  newsLetterPrivacy: string
+  newsLetterEmail: string
+  newsLetterSubscribe: string
+
+  lang: string
+
+  news: NewsItemProps[]
+}
+
+const {
+  title,
+  subtitle,
+  viewAll,
+  newsLetterTitle,
+  newsLetterDescription,
+  newsLetterPrivacy,
+  newsLetterEmail,
+  newsLetterSubscribe,
+
+  lang,
+
+  news,
+} = Astro.props as NewsProps
+---
+
+<section id="news" class="py-20">
+  <div class="container mx-auto px-4">
+    <div class="mx-auto mb-16 max-w-3xl text-center">
+      <h2 class="mb-4 text-3xl font-bold md:text-4xl">{title}</h2>
+      <p class="text-warm-700 dark:text-warm-300">{subtitle}</p>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {
+        news?.map((item: NewsItemProps) => (
+          <article class="dark:bg-warm-900 group overflow-hidden rounded-xl bg-white shadow-md transition-shadow duration-300 hover:shadow-xl">
+            <a href={item.url} class="block">
+              <div class="relative overflow-hidden">
+                <img
+                  src={item.image || '/placeholder.svg'}
+                  alt={item.title}
+                  class="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div class="bg-warm-600 dark:bg-warm-500 absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-medium text-white">
+                  {item.category}
+                </div>
+              </div>
+
+              <div class="p-6">
+                <div class="text-warm-600 dark:text-warm-400 mb-3 flex items-center gap-2 text-sm">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                  <time datetime={item.date}>
+                    {new Date(item.date).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </time>
+                </div>
+
+                <h3 class="group-hover:text-warm-600 dark:group-hover:text-warm-400 mb-3 text-xl font-bold transition-colors">
+                  {item.title}
+                </h3>
+
+                <p class="text-warm-700 dark:text-warm-300 mb-4">{item.excerpt}</p>
+
+                <div class="text-warm-600 dark:text-warm-400 group-hover:text-warm-800 dark:group-hover:text-warm-200 flex items-center gap-2 font-medium transition-colors">
+                  {item.readMore}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="#"
+        class="bg-warm-200 dark:bg-warm-800 text-warm-900 dark:text-warm-50 hover:bg-warm-300 dark:hover:bg-warm-700 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-colors"
+      >
+        {viewAll}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-4 w-4"
+        >
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Newsletter subscription -->
+    <div class="bg-warm-200 dark:bg-warm-800 mt-20 rounded-2xl p-8 md:p-12">
+      <div class="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
+        <div>
+          <h3 class="mb-3 text-2xl font-bold">{newsLetterTitle}</h3>
+          <p class="text-warm-700 dark:text-warm-300 mb-6">
+            {newsLetterDescription}
+          </p>
+
+          <div class="text-warm-700 dark:text-warm-300 flex items-center gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <span class="text-sm">{newsLetterPrivacy}</span>
+          </div>
+        </div>
+
+        <div>
+          <form class="space-y-4">
+            <div>
+              <label for="email" class="mb-2 block text-sm font-medium">{newsLetterEmail}</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="you@example.com"
+                class="border-warm-300 dark:border-warm-700 dark:bg-warm-900 focus:ring-warm-500 w-full rounded-lg border bg-white px-4 py-3 focus:ring-2 focus:outline-none"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="bg-warm-600 hover:bg-warm-700 dark:bg-warm-500 dark:hover:bg-warm-600 w-full rounded-lg px-6 py-3 font-medium text-white transition-colors"
+            >
+              {newsLetterSubscribe}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

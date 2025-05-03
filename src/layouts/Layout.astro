@@ -1,14 +1,33 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import "../styles/global.css";
+import { getLangFromUrl, useTranslations, type Locale } from '@/i18n'
+
+import Footer from './components/Footer.astro'
+import Header from './components/Header.astro'
+
+import '../styles/global.css'
+import { envs } from '@/envs'
+import { layoutLocale, type LayoutProps } from './i18n'
 
 interface Props {
-  title: string;
-  description: string;
+  title: string
+  description: string
 }
 
-const { title, description } = Astro.props;
+const { title, description } = Astro.props
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations<LayoutProps>(lang as Locale, layoutLocale)
+
+const header = {
+  github: envs.github,
+  hrefBuymeacoffee: envs.buyMeeACoffee,
+  buyMeACoffee: 'Buy me a coffee',
+}
+
+const footer = {
+  poweredby: 'Powered by',
+  hrefPowerdBy: envs.github,
+  developer: envs.developer,
+}
 ---
 
 <!doctype html>
@@ -30,10 +49,7 @@ const { title, description } = Astro.props;
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta
-      property="og:image"
-      content="https://capibarismo.pages.dev/images/hero-capybara.jpg"
-    />
+    <meta property="og:image" content="https://capibarismo.pages.dev/images/hero-capybara.jpg" />
     <meta property="og:locale" content="es_ES" />
     <meta property="og:site_name" content="Capibara Page" />
 
@@ -47,43 +63,41 @@ const { title, description } = Astro.props;
     <!-- Theme Detection -->
     <script is:inline>
       const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme");
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme')
         }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark'
         }
-        return "light";
-      })();
+        return 'light'
+      })()
 
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark");
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark')
       }
     </script>
   </head>
   <body
-    class="bg-warm-100 dark:bg-warm-800 text-warm-900 dark:text-warm-50 transition-colors duration-300"
+    class="bg-warm-100 dark:bg-warm-800 text-warm-900 dark:text-warm-50 min-h-screen transition-colors duration-300"
   >
     <div id="custom-cursor" class="hidden md:block"></div>
-    <Header />
+
+    <Header {...t('header')} {...header} />
     <slot />
-    <Footer />
+    <Footer {...t('footer')} {...footer} />
 
     <script>
       // Custom capybara cursor
-      document.addEventListener("DOMContentLoaded", () => {
-        const cursor = document.getElementById("custom-cursor");
+      document.addEventListener('DOMContentLoaded', () => {
+        const cursor = document.getElementById('custom-cursor')
 
-        document.addEventListener("mousemove", e => {
+        document.addEventListener('mousemove', (e) => {
           if (cursor) {
-            cursor.style.left = e.clientX + "px";
-            cursor.style.top = e.clientY + "px";
+            cursor.style.left = e.clientX + 'px'
+            cursor.style.top = e.clientY + 'px'
           }
-        });
-      });
+        })
+      })
     </script>
   </body>
 </html>

@@ -20,7 +20,7 @@
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 12px;
 }
 
@@ -47,7 +47,7 @@
 
 .dark::-webkit-scrollbar-thumb:hover {
   background: var(--warm-600);
-}
+} */
 
 /* Custom cursor */
 #custom-cursor {

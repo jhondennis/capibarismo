@@ -6,11 +6,11 @@ export const languages = {
 } as const
 
 export const i18n = {
-  defaultLocale: 'en',
-  locales: ['en', 'es'],
+  defaultLocale: 'es',
+  locales: ['es', 'en'],
 } as const
 
-export const defaultLang = 'en'
+export const defaultLang = 'es'
 
 export type Locale = (typeof i18n)['locales'][number]
 

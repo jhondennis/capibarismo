@@ -1,24 +1,21 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl } from '@/i18n'
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+const lang = getLangFromUrl(Astro.url)
 
-const languages = [
-  { code: "es", name: "Español", flag: "🇪🇸" },
-  { code: "en", name: "English", flag: "🇺🇸" }
-];
-
-const currentLanguage = languages.find(l => l.code === lang) || languages[0];
+const currentPath = Astro.url.pathname
+const spanishPath = currentPath.replace(/^\/en/, '') || '/'
+const englishPath = currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`
 ---
 
-<div class="relative group">
+<div class="group relative" id="language-selector">
   <button
-    id="language-toggle"
-    class="flex items-center gap-2 p-2 rounded-full hover:bg-warm-200 dark:hover:bg-warm-800 transition-colors"
+    class="hover:bg-warm-200 dark:hover:bg-warm-800 flex items-center gap-2 rounded-full p-2 transition-colors"
   >
-    <span>{currentLanguage.flag}</span>
-    <span class="hidden sm:inline">{currentLanguage.name}</span>
+    <span>{lang === 'en' ? '🇺🇸' : '🇪🇸'}</span>
+    <!-- <span class="hidden sm:inline">{lang === 'en' ? 'English' : 'Español'}</span> -->
+    <span class="sr-only md:not-sr-only">{lang === 'en' ? 'English' : 'Español'}</span>
+
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -27,7 +24,7 @@ const currentLanguage = languages.find(l => l.code === lang) || languages[0];
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="w-4 h-4"
+      class="h-4 w-4"
     >
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
@@ -35,43 +32,58 @@ const currentLanguage = languages.find(l => l.code === lang) || languages[0];
 
   <div
     id="language-dropdown"
-    class="absolute right-0 mt-2 w-40 bg-white dark:bg-warm-900 rounded-lg shadow-lg border border-warm-200 dark:border-warm-800 hidden group-hover:block z-50"
+    class="dark:bg-warm-900 border-warm-200 dark:border-warm-800 absolute right-0 z-50 mt-2 hidden w-40 rounded-lg border bg-white shadow-lg group-hover:block"
   >
-    <div class="p-2">
-      {
-        languages.map(language => (
-          <a
-            href={`/${language.code}`}
-            class={`flex items-center gap-2 px-3 py-2 rounded-md ${language.code === lang ? "bg-warm-100 dark:bg-warm-800" : "hover:bg-warm-100 dark:hover:bg-warm-800"} transition-colors`}
-          >
-            <span>{language.flag}</span>
-            <span>{language.name}</span>
-          </a>
-        ))
-      }
+    <div class="p-2" role="menu" aria-orientation="vertical">
+      <a
+        href={englishPath}
+        class={`flex items-center gap-2 rounded-md px-3 py-2 ${lang === 'en' ? 'bg-warm-100 dark:bg-warm-800' : 'hover:bg-warm-100 dark:hover:bg-warm-800'} transition-colors`}
+        role="menuitem"
+      >
+        🇺🇸 English
+      </a>
+      <a
+        href={spanishPath}
+        class={`flex items-center gap-2 rounded-md px-3 py-2 ${lang === 'es' ? 'bg-warm-100 dark:bg-warm-800' : 'hover:bg-warm-100 dark:hover:bg-warm-800'} transition-colors`}
+        role="menuitem"
+      >
+        🇪🇸 Español
+      </a>
     </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const toggle = document.getElementById("language-toggle");
-    const dropdown = document.getElementById("language-dropdown");
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   const toggle = document.getElementById('language-selector')
+  //   const dropdown = document.getElementById('language-dropdown')
 
-    if (toggle && dropdown) {
-      toggle.addEventListener("click", e => {
-        e.stopPropagation();
-        dropdown.classList.toggle("hidden");
-      });
+  //   if (toggle && dropdown) {
+  //     toggle.addEventListener('click', (e) => {
+  //       e.stopPropagation()
+  //       dropdown.classList.toggle('hidden')
+  //     })
 
-      document.addEventListener("click", e => {
-        if (
-          !dropdown.contains(e.target as Node) &&
-          !toggle.contains(e.target as Node)
-        ) {
-          dropdown.classList.add("hidden");
-        }
-      });
-    }
-  });
+  //     document.addEventListener('click', (e) => {
+  //       if (!dropdown.contains(e.target as Node) && !toggle.contains(e.target as Node)) {
+  //         dropdown.classList.add('hidden')
+  //       }
+  //     })
+  //   }
+  // })
+
+  const languageSelector = document.getElementById('language-selector')
+  const languageDropdown = document.getElementById('language-dropdown')
+
+  if (languageSelector && languageDropdown) {
+    languageSelector.addEventListener('click', (e) => {
+      e.stopPropagation()
+      languageDropdown.classList.toggle('hidden')
+    })
+    document.addEventListener('click', (e) => {
+      if (!languageSelector.contains(e.target as Node)) {
+        languageDropdown.classList.add('hidden')
+      }
+    })
+  }
 </script>

@@ -1,44 +1,74 @@
 ---
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import Button from "./Button.astro";
+import Button from '@/components/Button.astro'
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+export interface HeroProps {
+  welcome: string
+  titleFirst: string
+  titleSecond: string
+  titleHighlight: string
+  description: string
+  buttonPrimary: string
+  buttonSecondary: string
+  updated: string
+  updatedDate: string
+
+  image: string
+  imageAlt: string
+  imagePattern: string
+
+  heroCardLove: string
+  heroScroll: string
+}
+
+const {
+  welcome,
+  titleFirst,
+  titleSecond,
+  description,
+  buttonPrimary,
+  buttonSecondary,
+  updated,
+  updatedDate,
+  imagePattern,
+  image,
+  imageAlt,
+  heroCardLove,
+  heroScroll,
+  titleHighlight,
+} = Astro.props as HeroProps
 ---
 
 <section class="relative overflow-hidden pt-20 pb-32">
   <!-- Background pattern -->
   <div class="absolute inset-0 z-0 opacity-20 dark:opacity-10">
     <div
-      class="absolute top-0 left-0 w-full h-full bg-repeat"
-      style="background-image: url('/patterns/capybara-pattern.svg'); background-size: 100px;"
+      class="absolute top-0 left-0 h-full w-full bg-repeat"
+      style={`background-image: url('${imagePattern}'); background-size: 100px;`}
     >
     </div>
   </div>
 
-  <div class="container mx-auto px-4 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <div class="space-y-6 max-w-xl">
+  <div class="relative z-10 container mx-auto px-4">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+      <div class="max-w-xl space-y-6">
         <div
-          class="inline-block px-4 py-2 bg-warm-200 dark:bg-warm-800 rounded-full text-sm font-medium animate-bounce"
+          class="bg-warm-200 dark:bg-warm-800 inline-block animate-bounce rounded-full px-4 py-2 text-sm font-medium"
         >
-          {t("hero.welcome")} ✨
+          {welcome} ✨
         </div>
 
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-          {t("hero.title.first")}
-          <span class="text-warm-600 dark:text-warm-400"
-            >{t("hero.title.highlight")}</span
-          >
-          {t("hero.title.second")}
+        <h1 class="text-4xl leading-tight font-bold md:text-5xl lg:text-6xl">
+          {titleFirst}
+          <span class="text-warm-600 dark:text-warm-400">{titleHighlight}</span>
+          {titleSecond}
         </h1>
 
-        <p class="text-lg text-warm-700 dark:text-warm-300">
-          {t("hero.description")}
+        <p class="text-warm-700 dark:text-warm-300 text-lg">
+          {description}
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4">
-          <Button text={t("hero.button.primary")} href="#about" type="primary">
+        <div class="flex flex-col gap-4 sm:flex-row">
+          <Button text={buttonPrimary} href="#about" type="primary">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -47,20 +77,16 @@ const t = useTranslations(lang);
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="w-4 h-4"
+              class="h-4 w-4"
             >
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </Button>
-          <Button
-            text={t("hero.button.secondary")}
-            href="#news"
-            type="secondary"
-          />
+          <Button text={buttonSecondary} href="#news" type="secondary" />
         </div>
 
-        <div class="flex items-center gap-2 text-warm-700 dark:text-warm-300">
+        <div class="text-warm-700 dark:text-warm-300 flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -69,41 +95,34 @@ const t = useTranslations(lang);
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="w-4 h-4"
+            class="h-4 w-4"
           >
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="8" x2="12" y2="12"></line>
             <line x1="12" y1="16" x2="12.01" y2="16"></line>
           </svg>
-          <span class="text-sm"
-            >{t("hero.updated")}: <time datetime="2024-03-26">26/03/2024</time
-            ></span
-          >
+          <span class="text-sm"> {updated}: <time datetime={updatedDate}>{updatedDate}</time></span>
         </div>
       </div>
 
       <div class="relative">
         <div
-          class="relative z-10 rounded-2xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition-transform duration-300"
+          class="relative z-10 transform overflow-hidden rounded-2xl shadow-xl transition-transform duration-300 hover:scale-[1.02]"
         >
-          <img
-            src="/images/hero-capybara.jpg"
-            alt="Cute capybara relaxing"
-            class="w-full h-auto object-cover"
-          />
+          <img src={image} alt={imageAlt} class="h-auto w-full object-cover" />
         </div>
 
         <!-- Floating elements -->
         <div
-          class="absolute -top-6 -right-6 w-24 h-24 bg-warm-300 dark:bg-warm-700 rounded-full opacity-70 animate-float"
+          class="bg-warm-300 dark:bg-warm-700 animate-float absolute -top-6 -right-6 h-24 w-24 rounded-full opacity-70"
         >
         </div>
         <div
-          class="absolute -bottom-8 -left-8 w-16 h-16 bg-warm-400 dark:bg-warm-600 rounded-full opacity-70 animate-float animation-delay-1000"
+          class="bg-warm-400 dark:bg-warm-600 animate-float animation-delay-1000 absolute -bottom-8 -left-8 h-16 w-16 rounded-full opacity-70"
         >
         </div>
         <div
-          class="absolute top-1/2 -right-4 transform -translate-y-1/2 bg-white dark:bg-warm-800 rounded-xl p-3 shadow-lg animate-float animation-delay-2000"
+          class="dark:bg-warm-800 animate-float animation-delay-2000 absolute -top-12 -right-4 -translate-y-1/2 transform rounded-xl bg-white p-3 shadow-lg"
         >
           <div class="flex items-center gap-2">
             <svg
@@ -114,13 +133,13 @@ const t = useTranslations(lang);
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="w-5 h-5 text-red-500"
+              class="h-5 w-5 text-red-500"
             >
               <path
                 d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
               ></path>
             </svg>
-            <span class="font-medium">{t("hero.card.love")}</span>
+            <span class="font-medium">{heroCardLove}</span>
           </div>
         </div>
       </div>
@@ -128,10 +147,10 @@ const t = useTranslations(lang);
 
     <!-- Scroll indicator -->
     <div
-      class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 animate-pulse"
+      class="absolute -bottom-12 left-1/2 flex -translate-x-1/2 transform animate-pulse flex-col items-center gap-2"
     >
       <a href="#about">
-        <span class="text-sm font-medium">{t("hero.scroll")}</span>
+        <span class="text-sm font-medium">{heroScroll}</span>
       </a>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -141,7 +160,7 @@ const t = useTranslations(lang);
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="w-6 h-6 animate-bounce"
+        class="h-6 w-6 animate-bounce"
       >
         <polyline points="6 9 12 15 18 9"></polyline>
       </svg>
