@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import NewsSection, { type NewsSectionProps } from '../sections/NewsSection.astro'
+
+type News = CollectionEntry<'news'>
+
+export interface NewsDictionaryProps {
+  sectionNewsProps: Pick<NewsSectionProps, 'readMore'>
+}
+
+export interface NewsProps {
+  dictionary: NewsDictionaryProps
+  news: News[]
+  lang: string
+}
+
+const { dictionary, news, lang } = Astro.props as NewsProps
+---
+
+<NewsSection {...dictionary.sectionNewsProps} news={news} lang={lang} />

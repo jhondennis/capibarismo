@@ -83,7 +83,9 @@ const footer = {
     <div id="custom-cursor" class="hidden md:block"></div>
 
     <Header {...t('header')} {...header} />
-    <slot />
+    <main>
+      <slot />
+    </main>
     <Footer {...t('footer')} {...footer} />
 
     <script>

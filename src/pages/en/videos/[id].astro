@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+import Layout from '@/layouts/Layout.astro'
+import VideoDetail from '@/modules/videos/views/VideoDetail.astro'
+
+type Video = CollectionEntry<'videos'>
+
+export async function getStaticPaths() {
+  const videoCollection: Video[] = await getCollection('videos')
+
+  return videoCollection.map((video: Video) => ({
+    params: { id: video.id },
+    props: { video },
+  }))
+}
+
+const { video } = Astro.props
+const { title, description } = video.data
+
+const { Content } = await render(video)
+
+export const prerender = true
+---
+
+<Layout title={title} description={description}>
+  <VideoDetail video={video}>
+    <Content />
+  </VideoDetail>
+</Layout>

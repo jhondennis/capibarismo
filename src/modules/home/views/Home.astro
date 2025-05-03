@@ -1,32 +1,41 @@
 ---
+import type { CollectionEntry } from 'astro:content'
 import Hero, { type HeroProps } from '../sections/Hero.astro'
 import About, { type AboutProps } from '../sections/About.astro'
 import News, { type NewsProps } from '../sections/News.astro'
 import Videos, { type VideosProps } from '../sections/Videos.astro'
 
-export interface HomeProps {
+type News = CollectionEntry<'news'>
+type Video = CollectionEntry<'videos'>
+
+export interface HomeDictionaryProps {
   sectionHeroProps: Omit<HeroProps, 'updatedDate' | 'image' | 'imageAlt' | 'imagePattern'>
   sectionAboutProps: Omit<AboutProps, 'image' | 'imageAlt'>
-  sectionNewsProps: NewsProps
-  sectionVideosProps: VideosProps
+  sectionNewsProps: Omit<NewsProps, 'news' | 'lang'>
+  sectionVideosProps: Omit<VideosProps, 'videos' | 'lang'>
 }
 
-const { sectionHeroProps, sectionAboutProps, sectionNewsProps, sectionVideosProps } =
-  Astro.props as HomeProps
+export interface HomeProps {
+  dictionary: HomeDictionaryProps
+  news: News[]
+  videos: Video[]
+  lang: string
+}
+
+const { dictionary, news, videos, lang } = Astro.props as HomeProps
 ---
 
 <Hero
-  {...sectionHeroProps}
+  {...dictionary.sectionHeroProps}
   updatedDate="2024-03-26"
   image="/images/hero-capybara.jpg"
   imageAlt="Cute capybara relaxing"
   imagePattern="/patterns/capybara-pattern.svg"
 />
 <About
-  {...sectionAboutProps}
+  {...dictionary.sectionAboutProps}
   image="https://t3.ftcdn.net/jpg/08/04/34/56/360_F_804345665_mhKUnvPANkxG6tQ4ihXTQvu6wt3Dx3vy.jpg"
   imageAlt="Capybara in its natural habitat"
 />
-<News {...sectionNewsProps} />
-<!-- TODO: aqui aparecen todos esos warnings -->
-<Videos {...sectionVideosProps} />
+<News {...dictionary.sectionNewsProps} news={news} lang={lang} />
+<Videos {...dictionary.sectionVideosProps} videos={videos} lang={lang} />

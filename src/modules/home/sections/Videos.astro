@@ -1,23 +1,21 @@
 ---
-export interface VideoItemProps {
-  title: string
-  description: string
-  embedIdYoutube: string
-  author: string
-  viewsYoutube: string
-  viewText: string
-}
+import type { CollectionEntry } from 'astro:content'
+
+import VideoCard from '@/components/VideoCard.astro'
+import { getLocalizedRoute, ROUTES } from '@/constants'
+
+type Video = CollectionEntry<'videos'>
 
 export interface VideosProps {
   title: string
   subtitle: string
-  hrefTikTok: string
-  moreTikTok: string
+  viewAll: string
+  lang: string
 
-  videos: VideoItemProps[]
+  videos: Video[]
 }
 
-const { title, subtitle, hrefTikTok, moreTikTok, videos } = Astro.props as VideosProps
+const { title, subtitle, viewAll, lang, videos } = Astro.props as VideosProps
 ---
 
 <section id="videos" class="bg-warm-100 dark:bg-warm-800/50 py-20">
@@ -29,72 +27,21 @@ const { title, subtitle, hrefTikTok, moreTikTok, videos } = Astro.props as Video
 
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {
-        videos?.map((video: VideoItemProps) => (
-          <div class="dark:bg-warm-900 overflow-hidden rounded-xl bg-white shadow-md transition-shadow duration-300 hover:shadow-xl">
-            <div class="relative overflow-hidden pb-[56.25%]">
-              <iframe
-                src={`https://www.youtube.com/embed/${video.embedIdYoutube}`}
-                title={video.title}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen
-                class="absolute top-0 left-0 h-full w-full"
-              />
-            </div>
-
-            <div class="p-6">
-              <h3 class="mb-2 text-xl font-bold">{video.title}</h3>
-              <p class="text-warm-700 dark:text-warm-300 mb-4">{video.description}</p>
-
-              <div class="flex items-center justify-between">
-                <div class="text-warm-600 dark:text-warm-400 flex items-center gap-2 text-sm">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4"
-                  >
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                  <span>{video.author}</span>
-                </div>
-
-                <div class="text-warm-600 dark:text-warm-400 flex items-center gap-2 text-sm">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4"
-                  >
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                  <span>
-                    {video.viewsYoutube} {video.viewText}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+        videos?.map((video: Video) => (
+          <VideoCard
+            video={video}
+            url={getLocalizedRoute([ROUTES.VIDEOS, video.id].join('/'), lang)}
+          />
         ))
       }
     </div>
 
     <div class="mt-12 text-center">
       <a
-        href={hrefTikTok}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center justify-center gap-2 rounded-full bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-gray-900"
+        href={getLocalizedRoute(ROUTES.VIDEOS, lang)}
+        class="bg-warm-200 dark:bg-warm-800 text-warm-900 dark:text-warm-50 hover:bg-warm-300 dark:hover:bg-warm-700 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-colors"
       >
+        {viewAll}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -103,14 +50,12 @@ const { title, subtitle, hrefTikTok, moreTikTok, videos } = Astro.props as Video
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="h-5 w-5"
+          class="h-4 w-4"
         >
-          <path d="M9 12a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"></path>
-          <path d="M15 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"></path>
-          <path d="M15 8v8a4 4 0 0 1-4 4H9"></path>
-          <line x1="15" y1="4" x2="21" y2="4"></line>
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
         </svg>
-        {moreTikTok}
       </a>
     </div>
   </div>

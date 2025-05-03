@@ -1,0 +1,90 @@
+---
+export interface NewsCardProps {
+  title: string
+  excerpt: string
+  date: string
+  image: string
+  category: string
+  url: string
+
+  readMore: string
+  lang: string
+}
+
+const { title, excerpt, date, image, category, url, readMore, lang } = Astro.props as NewsCardProps
+---
+
+<article
+  class="dark:bg-warm-900 group overflow-hidden rounded-xl bg-white shadow-md transition-shadow duration-300 hover:shadow-xl"
+>
+  <a href={url} class="block">
+    <div class="relative overflow-hidden">
+      <img
+        src={image || '/placeholder.svg'}
+        alt={title}
+        class="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      <div
+        class="bg-warm-600 dark:bg-warm-500 absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-medium text-white"
+      >
+        {category}
+      </div>
+    </div>
+
+    <div class="p-6">
+      <div class="text-warm-600 dark:text-warm-400 mb-3 flex items-center gap-2 text-sm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-4 w-4"
+        >
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <time datetime={date}>
+          {
+            new Date(date).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })
+          }
+        </time>
+      </div>
+
+      <h3
+        class="group-hover:text-warm-600 dark:group-hover:text-warm-400 mb-3 text-xl font-bold transition-colors"
+      >
+        {title}
+      </h3>
+
+      <p class="text-warm-700 dark:text-warm-300 mb-4">{excerpt}</p>
+
+      <div
+        class="text-warm-600 dark:text-warm-400 group-hover:text-warm-800 dark:group-hover:text-warm-200 flex items-center gap-2 font-medium transition-colors"
+      >
+        {readMore}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-4 w-4 transition-transform group-hover:translate-x-1"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
+    </div>
+  </a>
+</article>

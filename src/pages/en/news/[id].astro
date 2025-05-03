@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+import Layout from '@/layouts/Layout.astro'
+import NewsDetail from '@/modules/news/views/NewsDetail.astro'
+
+type News = CollectionEntry<'news'>
+
+export async function getStaticPaths() {
+  const newsCollection: News[] = await getCollection('news')
+
+  return newsCollection.map((news: News) => ({
+    params: { id: news.id },
+    props: { news },
+  }))
+}
+
+const { news } = Astro.props
+const { title, category } = news.data
+
+const { Content } = await render(news)
+
+export const prerender = true
+---
+
+<Layout title={title} description={category}>
+  <NewsDetail news={news}>
+    <Content />
+  </NewsDetail>
+</Layout>

@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+type Video = CollectionEntry<'videos'>
+
+export interface VideoSectionDetailProps {
+  video: Video
+}
+
+const { video } = Astro.props as VideoSectionDetailProps
+---
+
+<section class="my-10 flex w-full flex-col items-center justify-center gap-10">
+  <div class="flex flex-col items-center gap-2">
+    <div set:html={video.data.embed} />
+    <h1 transition:name={`title-${video.id}`} class="mb-4 text-lg font-light">
+      {video.data.title}
+    </h1>
+  </div>
+  <div class="prose prose-invert p-4">
+    <slot />
+  </div>
+</section>

@@ -1,7 +1,7 @@
 import type { Locale } from '@/i18n'
-import type { HomeProps } from '../views/Home.astro'
+import type { HomeDictionaryProps } from '../views/Home.astro'
 
-export const homeLocale: Record<Locale, HomeProps> = {
+export const homeLocale: Record<Locale, HomeDictionaryProps> = {
   es: {
     sectionHeroProps: {
       welcome: '¡Hola, amante de los capivaras!',
@@ -54,76 +54,18 @@ export const homeLocale: Record<Locale, HomeProps> = {
       title: 'Novedades del Capivarismo',
       subtitle: '¡Entérate de lo último sobre estos capis adorables!',
       viewAll: 'Ver todo el chisme',
-      lang: 'es',
 
       newsLetterTitle: '¡Únete al club capi!',
       newsLetterDescription: 'Recibe noticias y cositas cool de capivaras en tu correo.',
       newsLetterPrivacy: 'Tranqui, no molestamos. Puedes salir cuando quieras.',
       newsLetterEmail: 'Tu correo',
       newsLetterSubscribe: '¡Me apunto!',
-
-      news: [
-        {
-          title: 'Capivaras: las estrellas de Internet',
-          excerpt: 'Estos cuties están arrasando en redes con videos mega divertidos!',
-          date: '2024-03-10',
-          image: 'https://i.pinimg.com/736x/eb/eb/b7/ebebb71e0bbc0e86ac548416b1f16f09.jpg',
-          category: 'Vida capi',
-          url: '#',
-          readMore: 'Leer más',
-        },
-        {
-          title: '¡Más zonas seguras para capivaras en Brasil!',
-          excerpt: 'Brasil está cuidando a los capis con nuevas áreas protegidas en la selva.',
-          date: '2024-03-20',
-          image: 'https://i.pinimg.com/736x/eb/eb/b7/ebebb71e0bbc0e86ac548416b1f16f09.jpg',
-          category: 'Cuidarlos',
-          url: '#',
-          readMore: 'Leer más',
-        },
-        {
-          title: '¡Los capivaras son súper listos!',
-          excerpt: 'Un estudio dice que los capis reconocen a un montón de amigos.',
-          date: '2024-03-15',
-          image: 'https://i.pinimg.com/736x/eb/eb/b7/ebebb71e0bbc0e86ac548416b1f16f09.jpg',
-          category: 'Descubrimientos',
-          url: '#',
-          readMore: 'Leer más',
-        },
-      ],
+      readMore: 'Leer más',
     },
     sectionVideosProps: {
       title: 'Videos de capivaras',
       subtitle: '¡Mira los mejores videos de capis en TikTok y YouTube!',
-      moreTikTok: 'Más en TikTok',
-      hrefTikTok: 'https://tiktok.com/tag/capybara',
-
-      videos: [
-        {
-          title: 'Capivaras chilling en aguas calientes',
-          description: 'Estos capis se relajan a tope en aguas termales japonesas.',
-          embedIdYoutube: 'dQw4w9WgXcQ',
-          author: '@capybaraworld',
-          viewsYoutube: '1.2M',
-          viewText: 'vistas',
-        },
-        {
-          title: 'Bebés capi jugando en el agua',
-          description: '¡Pequeños capivaras nadando y pasándola genial en un charco!',
-          embedIdYoutube: 'dQw4w9WgXcQ',
-          author: '@capylovers',
-          viewsYoutube: '856K',
-          viewText: 'vistas',
-        },
-        {
-          title: 'Capivaras haciendo amigos',
-          description: '¡Mira cómo los capis se llevan bien con un montón de animales!',
-          embedIdYoutube: 'dQw4w9WgXcQ',
-          author: '@wildlifefacts',
-          viewsYoutube: '543K',
-          viewText: 'vistas',
-        },
-      ],
+      viewAll: 'Ver todos los videos',
     },
   },
   en: {
@@ -178,73 +120,17 @@ export const homeLocale: Record<Locale, HomeProps> = {
       title: 'Capybara News',
       subtitle: 'Stay updated on these adorable capys!',
       viewAll: 'See all the buzz',
-      lang: 'en',
       newsLetterTitle: 'Join the capy club!',
       newsLetterDescription: 'Get capybara news and cool stuff straight to your inbox.',
       newsLetterPrivacy: 'No worries, we won’t spam. Unsubscribe anytime.',
       newsLetterEmail: 'Your email',
       newsLetterSubscribe: 'Sign me up!',
-      news: [
-        {
-          title: 'Capybaras: Internet stars',
-          excerpt: 'These cuties are taking over social media with super fun videos!',
-          date: '2024-03-10',
-          image: 'https://i.pinimg.com/736x/eb/eb/b7/ebebb71e0bbc0e86ac548416b1f16f09.jpg',
-          category: 'Capy life',
-          url: '#',
-          readMore: 'Read more',
-        },
-        {
-          title: 'More safe zones for capybaras in Brazil!',
-          excerpt: 'Brazil is protecting capys with new safe areas in the jungle.',
-          date: '2024-03-20',
-          image: 'https://i.pinimg.com/736x/eb/eb/b7/ebebb71e0bbc0e86ac548416b1f16f09.jpg',
-          category: 'Conservation',
-          url: '#',
-          readMore: 'Read more',
-        },
-        {
-          title: 'Capybaras are super smart!',
-          excerpt: 'A study says capys can recognize tons of friends.',
-          date: '2024-03-15',
-          image: 'https://i.pinimg.com/736x/eb/eb/b7/ebebb71e0bbc0e86ac548416b1f16f09.jpg',
-          category: 'Discoveries',
-          url: '#',
-          readMore: 'Read more',
-        },
-      ],
+      readMore: 'Read more',
     },
     sectionVideosProps: {
       title: 'Capybara Videos',
       subtitle: 'Check out the best capy videos on TikTok and YouTube!',
-      moreTikTok: 'More on TikTok',
-      hrefTikTok: 'https://tiktok.com/tag/capybara',
-      videos: [
-        {
-          title: 'Capybaras chilling in hot springs',
-          description: 'These capys are relaxing big time in Japanese hot springs.',
-          embedIdYoutube: 'dQw4w9WgXcQ',
-          author: '@capybaraworld',
-          viewsYoutube: '1.2M',
-          viewText: 'views',
-        },
-        {
-          title: 'Baby capys playing in water',
-          description: 'Tiny capybaras swimming and having a blast in a puddle!',
-          embedIdYoutube: 'dQw4w9WgXcQ',
-          author: '@capylovers',
-          viewsYoutube: '856K',
-          viewText: 'views',
-        },
-        {
-          title: 'Capybaras making friends',
-          description: 'Watch capys buddy up with all sorts of animals!',
-          embedIdYoutube: 'dQw4w9WgXcQ',
-          author: '@wildlifefacts',
-          viewsYoutube: '543K',
-          viewText: 'views',
-        },
-      ],
+      viewAll: 'More videos',
     },
   },
 }

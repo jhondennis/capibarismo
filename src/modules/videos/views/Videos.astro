@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import VideosSection, { type VideosSectionProps } from '../sections/VideosSection.astro'
+
+type Video = CollectionEntry<'videos'>
+
+export interface VideosDictionaryProps {
+  sectionVideosProps: Pick<VideosSectionProps, 'readMore'>
+}
+
+export interface VideosProps {
+  dictionary: VideosDictionaryProps
+  videos: Video[]
+  lang: string
+}
+
+const { dictionary, videos, lang } = Astro.props as VideosProps
+---
+
+<VideosSection {...dictionary.sectionVideosProps} videos={videos} lang={lang} />

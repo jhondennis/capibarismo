@@ -1,13 +1,10 @@
 ---
-export interface NewsItemProps {
-  title: string
-  excerpt: string
-  date: string
-  image: string
-  category: string
-  url: string
-  readMore: string
-}
+import type { CollectionEntry } from 'astro:content'
+
+import NewsCard from '@/components/NewsCard.astro'
+import { getLocalizedRoute, ROUTES } from '@/constants'
+
+type News = CollectionEntry<'news'>
 
 export interface NewsProps {
   title: string
@@ -18,10 +15,11 @@ export interface NewsProps {
   newsLetterPrivacy: string
   newsLetterEmail: string
   newsLetterSubscribe: string
+  readMore: string
 
   lang: string
 
-  news: NewsItemProps[]
+  news: News[]
 }
 
 const {
@@ -33,6 +31,7 @@ const {
   newsLetterPrivacy,
   newsLetterEmail,
   newsLetterSubscribe,
+  readMore,
 
   lang,
 
@@ -49,78 +48,20 @@ const {
 
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {
-        news?.map((item: NewsItemProps) => (
-          <article class="dark:bg-warm-900 group overflow-hidden rounded-xl bg-white shadow-md transition-shadow duration-300 hover:shadow-xl">
-            <a href={item.url} class="block">
-              <div class="relative overflow-hidden">
-                <img
-                  src={item.image || '/placeholder.svg'}
-                  alt={item.title}
-                  class="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div class="bg-warm-600 dark:bg-warm-500 absolute top-4 left-4 rounded-full px-3 py-1 text-xs font-medium text-white">
-                  {item.category}
-                </div>
-              </div>
-
-              <div class="p-6">
-                <div class="text-warm-600 dark:text-warm-400 mb-3 flex items-center gap-2 text-sm">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4"
-                  >
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                  <time datetime={item.date}>
-                    {new Date(item.date).toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </time>
-                </div>
-
-                <h3 class="group-hover:text-warm-600 dark:group-hover:text-warm-400 mb-3 text-xl font-bold transition-colors">
-                  {item.title}
-                </h3>
-
-                <p class="text-warm-700 dark:text-warm-300 mb-4">{item.excerpt}</p>
-
-                <div class="text-warm-600 dark:text-warm-400 group-hover:text-warm-800 dark:group-hover:text-warm-200 flex items-center gap-2 font-medium transition-colors">
-                  {item.readMore}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  >
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </div>
-              </div>
-            </a>
-          </article>
+        news?.map((item: News) => (
+          <NewsCard
+            {...item.data}
+            lang={lang}
+            readMore={readMore}
+            url={getLocalizedRoute([ROUTES.NEWS, item.id].join('/'), lang)}
+          />
         ))
       }
     </div>
 
     <div class="mt-12 text-center">
       <a
-        href="#"
+        href={getLocalizedRoute(ROUTES.NEWS, lang)}
         class="bg-warm-200 dark:bg-warm-800 text-warm-900 dark:text-warm-50 hover:bg-warm-300 dark:hover:bg-warm-700 inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-medium transition-colors"
       >
         {viewAll}

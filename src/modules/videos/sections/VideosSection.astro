@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import VideoCard from '@/components/VideoCard.astro'
+import { getLocalizedRoute, ROUTES } from '@/constants'
+
+type Video = CollectionEntry<'videos'>
+
+export interface VideosSectionProps {
+  videos: Video[]
+  readMore: string
+  lang: string
+}
+
+const { videos, lang, readMore } = Astro.props as VideosSectionProps
+---
+
+<section class="container mx-auto p-4">
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+    {
+      videos?.map((videoItem: Video) => {
+        return (
+          <VideoCard
+            key={videoItem.id}
+            video={videoItem}
+            url={getLocalizedRoute([ROUTES.VIDEOS, videoItem.id].join('/'), lang)}
+            readMore={readMore}
+          />
+        )
+      })
+    }
+  </div>
+</section>

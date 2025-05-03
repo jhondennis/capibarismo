@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import VideoSectionDetail from '../sections/VideoSectionDetail.astro'
+
+type Video = CollectionEntry<'videos'>
+
+export interface VideoDetailProps {
+  video: Video
+}
+
+const { video } = Astro.props as VideoDetailProps
+---
+
+<VideoSectionDetail video={video}>
+  <slot />
+</VideoSectionDetail>

@@ -1,0 +1,24 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content'
+import { getLangFromUrl, useTranslations, type Locale } from '@/i18n'
+import Layout from '@/layouts/Layout.astro'
+import Videos from '@/modules/videos/views/Videos.astro'
+import { videosLocale } from '@/modules/videos/i18n'
+import type { VideosDictionaryProps } from '@/modules/videos/views/Videos.astro'
+
+type Video = CollectionEntry<'videos'>
+
+const lang = getLangFromUrl(Astro.url)
+const videos: Video[] = await getCollection('videos', ({ data }) => data.lang === lang)
+const t = useTranslations<VideosDictionaryProps>(lang as Locale, videosLocale)
+
+export const prerender = true
+---
+
+<Layout title={'Videos'} description={'¡Videos about capybaras!'}>
+  <Videos
+    dictionary={{ sectionVideosProps: t('sectionVideosProps') }}
+    videos={videos}
+    lang={lang}
+  />
+</Layout>

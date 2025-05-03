@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+
+import { getLangFromUrl, useTranslations, type Locale } from '@/i18n'
+import Layout from '@/layouts/Layout.astro'
+import News from '@/modules/news/views/News.astro'
+import { newsLocale } from '@/modules/news/i18n'
+import type { NewsDictionaryProps } from '@/modules/news/views/News.astro'
+
+type News = CollectionEntry<'news'>
+const lang = getLangFromUrl(Astro.url)
+const news: News[] = await getCollection('news', ({ data }) => data.lang === lang)
+const t = useTranslations<NewsDictionaryProps>(lang as Locale, newsLocale)
+
+export const prerender = true
+---
+
+<Layout title={'Noticias'} description={'¡Noticias sobre capivaras!'}>
+  <News dictionary={{ sectionNewsProps: t('sectionNewsProps') }} news={news} lang={lang} />
+</Layout>

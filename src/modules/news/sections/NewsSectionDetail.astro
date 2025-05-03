@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+type News = CollectionEntry<'news'>
+
+export interface NewsSectionDetailProps {
+  news: News
+}
+
+const { news } = Astro.props as NewsSectionDetailProps
+---
+
+<section class="my-10 flex w-full flex-col items-center justify-center gap-10">
+  <div class="flex flex-col items-center gap-2">
+    <img
+      transition:name={`img-${news.id}`}
+      class="h-auto w-96 rounded"
+      src={news.data.image}
+      alt={news.data.title}
+    />
+    <h1 transition:name={`title-${news.id}`} class="mb-4 text-lg font-light">{news.data.title}</h1>
+  </div>
+  <div class="prose prose-invert p-4">
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import NewsSectionDetail from '../sections/NewsSectionDetail.astro'
+
+type News = CollectionEntry<'news'>
+
+export interface NewsDetailProps {
+  news: News
+}
+
+const { news } = Astro.props as NewsDetailProps
+---
+
+<NewsSectionDetail news={news}>
+  <slot />
+</NewsSectionDetail>
